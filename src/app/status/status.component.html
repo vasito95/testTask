@@ -1,0 +1,30 @@
+<div class="content-header">
+  <h3>Количество елементов {{statusList.length}}</h3>
+  <h1 (click)="modalOpened = true">+</h1>
+</div>
+<div class="content-inner">
+  <h1 *ngFor="let s of statusList,let i = index">{{i+1}}. {{s.name}}</h1>
+</div>
+<div *ngIf="modalOpened" class="modal-wrap">
+  <div class="modal-field">
+    <div class="modal-field-header">
+      <h3>Добавление нового статуса</h3>
+      <div>
+        <h1 (click)="modalOpened = false">+</h1>
+      </div>
+    </div>
+    <div class="modal-field-form">
+      <form [formGroup]="form">
+        <mat-form-field>
+          <input formControlName="name"
+                 required
+                 matInput
+                 placeholder="New Status"
+          >
+        </mat-form-field>
+      </form>
+      <button [disabled]="form.invalid" mat-button (click)="addNewStatus()">Сохранить</button>
+      <button mat-button (click)="cancelAdd()">Отменить</button>
+    </div>
+  </div>
+</div>

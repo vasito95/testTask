@@ -1,0 +1,50 @@
+<div class="content-header">
+  <h3>Количество елементов {{taskList.length}}</h3>
+  <h1 (click)="modalOpened = true">+</h1>
+</div>
+<div class="content-inner">
+  <h1 *ngFor="let t of taskList,let i = index">{{i + 1}}. {{t.status}} - {{t.date | date:'longDate'}} - {{t.description}}</h1>
+</div>
+<div *ngIf="modalOpened" class="modal-wrap">
+  <div class="modal-field">
+
+    <div class="modal-field-header">
+      <h3>Добавление нового задаиня</h3>
+      <div>
+        <h1 (click)="modalOpened = false">+</h1>
+      </div>
+    </div>
+    <div class="modal-field-form">
+      <form [formGroup]="form">
+        <mat-form-field>
+          <input formControlName="date"
+                 matInput
+                 [matDatepicker]="picker"
+                 placeholder="Choose a date"
+          >
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+
+        <mat-select
+          formControlName="status"
+          placeholder="Choose a status">
+          <mat-option *ngFor="let s of statusList" [value]="s.name">
+            {{s.name}}
+          </mat-option>
+        </mat-select>
+
+        <mat-form-field>
+          <textarea formControlName="description"
+                    matInput
+                    placeholder="Description"
+          >
+          </textarea>
+        </mat-form-field>
+
+      </form>
+      <button [disabled]="form.invalid" mat-button (click)="addNewTask()">Сохранить</button>
+      <button mat-button (click)="cancelAdd()">Отменить</button>
+    </div>
+  </div>
+</div>
